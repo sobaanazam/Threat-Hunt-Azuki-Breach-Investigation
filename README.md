@@ -1183,27 +1183,42 @@ Search DeviceProcessEvents for mstsc.exe combined with /v: arguments. When prece
 ## 🚨 Detection Gaps & Recommendations
 
 ### Observed Gaps
-- <Placeholder>
-- <Placeholder>
-- <Placeholder>
+- No alerting on successful RDP authentication from a public IP address  
+- Windows Defender exclusions were modified without triggering high-severity alerts  
+- Credential dumping activity (`sekurlsa::logonpasswords`) was not immediately detected  
+- Scheduled task creation with SYSTEM privileges was not flagged  
+- Outbound HTTPS traffic to unknown IP (78.141.196.6) was not blocked or alerted  
+- Discord webhook-based data exfiltration was not monitored or restricted  
+- Event log clearing (`wevtutil.exe cl Security`) was not escalated  
 
 ### Recommendations
-- <Placeholder>
-- <Placeholder>
-- <Placeholder>
+- Enforce MFA and restrict public RDP exposure via firewall/NSG rules  
+- Enable Microsoft Defender Tamper Protection and alert on exclusion changes  
+- Deploy ASR rules to block LSASS credential theft techniques  
+- Alert on `schtasks.exe /create` combined with non-system binary paths  
+- Monitor outbound HTTPS connections from non-browser processes  
+- Restrict or monitor outbound traffic to cloud messaging/file-sharing services (e.g., Discord)  
+- Centralize log collection to prevent loss of evidence from local log clearing  
+- Implement detection correlation rules for chained behaviors (RDP → Discovery → LOLBIN → Persistence → C2 → Dumping → Exfiltration)
 
 ---
 
 ## 🧾 Final Assessment
 
-<Concise executive-style conclusion summarizing risk, attacker sophistication, and defensive posture.>
+The investigation confirms a full lifecycle compromise beginning with credential-based RDP access and progressing through discovery, defense evasion, persistence, command-and-control, credential dumping, data staging, exfiltration, anti-forensics, and lateral movement. The attacker demonstrated moderate-to-advanced tradecraft by leveraging living-off-the-land binaries, encrypted C2 over HTTPS, Defender tampering, and cloud-based exfiltration via Discord.
+
+The environment lacked layered detection correlation and outbound traffic inspection, allowing the attacker to operate end-to-end without interruption. Overall impact is **Critical**, with confirmed credential compromise, data exfiltration, and attempted internal expansion.
+
+---
 
 ---
 
 ## 📎 Analyst Notes
 
-- Report structured for interview and portfolio review  
-- Evidence reproducible via advanced hunting  
-- Techniques mapped directly to MITRE ATT&CK  
+- Report structured for technical interview and portfolio presentation  
+- All evidence reproducible via Microsoft Defender for Endpoint advanced hunting queries  
+- Findings mapped directly to MITRE ATT&CK techniques  
+- Demonstrates full kill chain reconstruction and investigative workflow  
+- Highlights real-world detection engineering improvement opportunities  
 
 ---
