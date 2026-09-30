@@ -64,8 +64,6 @@ A full-scale intrusion was identified on the AZUKI-SL workstation at Azuki Impor
 
 ## 🧠 Hunt Overview
 
-<High-level narrative describing the attack lifecycle, key behaviors observed, and why this hunt matters.>
-
 ---
 
 ## 🧬 MITRE ATT&CK Summary
